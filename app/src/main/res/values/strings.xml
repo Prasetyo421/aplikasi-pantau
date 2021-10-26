@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Pantau Covid-19</string>
+    <string name="setting">setting</string>
+    <string name="emergency_number">Emergency number</string>
+    <string name="covid">Covid</string>
+    <string name="hospital">Hospital</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_image_phone">Button Image Phone</string>
+    <string name="cases">cases</string>
+    <string name="deaths">deaths</string>
+    <string name="recovers">recovers</string>
+    <string name="icon_hospital">icon hospital</string>
+    <string name="bed_available">bed available : </string>
+    <string name="icon_phone_enable">icon phone enable</string>
+    <string name="api_corona">API Corona</string>
+    <string name="link_soure_api_corona">https://data.covid19.go.id/public/api/</string>
+    <string name="api_hospitals">API Hospitals</string>
+    <string name="link_source_api_hospital">https://github.com/satyawikananda/rs-bed-covid-indo-api</string>
+    <string name="developer">Developer</string>
+    <string name="photo_developer">photo developer</string>
+    <string name="profile_developer">Didi Prasetyo\nBanyumas\nIndonesia</string>
+    <string name="about">about</string>
+    <string name="number">number</string>
+    <string name="province_name">province name</string>
+    <string name="icon_search">icon search</string>
+    <string name="province">Province :</string>
+    <string name="city">City :</string>
+    <string name="Covid">Covid</string>
+    <string name="non_covid">Non Covid</string>
+    <string name="city_name">City Name</string>
+    <string name="search">search</string>
+    <string name="last_updated">Last updated : </string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="setting_name">setting name</string>
+    <string name="enter_name">enter name</string>
+    <string name="setting_province">setting province</string>
+</resources>

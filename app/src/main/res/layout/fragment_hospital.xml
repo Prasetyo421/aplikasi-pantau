@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.HospitalFragment"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_province_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/shadow_effect"
+        android:layout_marginTop="28dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/province"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/province_named"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/province_name"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_city_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/shadow_effect"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_province_name"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/city" />
+
+        <AutoCompleteTextView
+            android:id="@+id/city_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/city_name"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_city_name"
+        app:singleLine="true"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        style="@style/Widget.MaterialComponents.ChipGroup"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_covid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Covid"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_non_covid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/non_covid"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chip_group"
+        app:layout_constraintTop_toBottomOf="@+id/ll_city_name" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_city_name"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="58dp">
+
+            <include layout="@layout/shimmer_item_hospital"/>
+            <include layout="@layout/shimmer_item_hospital"/>
+            <include layout="@layout/shimmer_item_hospital"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_city_name"
+        tools:listitem="@layout/item_hospital"
+        android:layout_marginTop="58dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

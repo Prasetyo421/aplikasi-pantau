@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="146dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:background="@drawable/shadow_effect"
+    android:layout_marginBottom="32dp">
+
+    <TextView
+        android:id="@+id/tv_province_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="300dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        tools:text="Jawa Tengah" />
+
+    <TextView
+        android:id="@+id/tv_amount_cases"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:textColor="#EF6C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_province_name"
+        app:layout_constraintWidth_percent=".2"
+        android:textAlignment="center"
+        tools:targetApi="o"
+        tools:text="35245" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:text="@string/cases"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_cases" />
+
+    <TextView
+        android:id="@+id/tv_amount_death"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28sp"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_province_name"
+        app:layout_constraintWidth_percent=".2"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:textAlignment="center"
+        tools:targetApi="o"
+        tools:text="54"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deaths"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_death" />
+
+    <TextView
+        android:id="@+id/tv_amount_recover"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28sp"
+        android:layout_marginEnd="16dp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:textAlignment="center"
+        android:textColor="#009688"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_province_name"
+        app:layout_constraintWidth_percent=".2"
+        tools:targetApi="o"
+        tools:text="173" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recovers"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_recover"
+        android:layout_marginEnd="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

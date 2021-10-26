@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_emergency_number"
+        android:title="@string/number"
+        android:icon="@drawable/ic_baseline_phone_24"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_covid"
+        android:title="@string/covid"
+        android:icon="@drawable/ic_baseline_coronavirus_24"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_hospital"
+        android:title="@string/hospital"
+        android:icon="@drawable/ic_baseline_local_hospital_24"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_about"
+        android:title="@string/about"
+        android:icon="@drawable/ic_baseline_info_24"
+        app:showAsAction="ifRoom"/>
+</menu>

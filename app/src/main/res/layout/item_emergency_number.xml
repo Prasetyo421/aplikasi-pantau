@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="77dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:layout_marginBottom="32dp"
+    android:background="@drawable/shadow_effect">
+
+    <TextView
+        android:id="@+id/tv_number_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Emergency Number"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="081123123123"
+        app:layout_constraintTop_toBottomOf="@id/tv_number_name"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="33sp"/>
+
+    <ImageView
+        android:id="@+id/img_phone_enable"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:src="@drawable/ic_baseline_phone_enabled_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/button_image_phone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
