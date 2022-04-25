@@ -11,7 +11,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.SectionPagerAdapterDetailHospital
 import com.didi.pantaucovid_19.databinding.FragmentDetailHospitalBinding
-import com.didi.pantaucovid_19.viewmodel.HospitalViewModel
 import com.didi.pantaucovid_19.viewmodel.SharedViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

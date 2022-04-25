@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.CovidAdapter
 import com.didi.pantaucovid_19.databinding.FragmentCovidBinding
-import com.didi.pantaucovid_19.helper.Helper.Companion.listProvince
-import com.didi.pantaucovid_19.helper.Helper.Companion.listProvinceName
+import com.didi.pantaucovid_19.helper.Helper.Companion.mapProvinces
 import com.didi.pantaucovid_19.model.ListDataItem
 import com.didi.pantaucovid_19.viewmodel.CovidViewModel
 import kotlinx.coroutines.Dispatchers
@@ -49,11 +47,12 @@ class CovidFragment : Fragment() {
         Timber.d("isloading: $visible")
         covidViewModel.listCovid.observe(viewLifecycleOwner, { listCovid ->
             lifecycleScope.launch(Dispatchers.Default){
-                if (true){
-
-                }else {
-                    covidAdapter.setData(ArrayList(listCovid))
-                }
+//                if (false){
+//
+//                }else {
+//                    covidAdapter.setData(ArrayList(listCovid))
+//                }
+                covidAdapter.setData(ArrayList(listCovid))
             }
         })
 
@@ -95,7 +94,7 @@ class CovidFragment : Fragment() {
         binding?.rvCovid?.layoutManager = LinearLayoutManager(context)
         binding?.rvCovid?.adapter = covidAdapter
 
-        val adapter = ArrayAdapter<String>(context as Context, R.layout.support_simple_spinner_dropdown_item, listProvinceName)
+        val adapter = ArrayAdapter<String>(context as Context, R.layout.support_simple_spinner_dropdown_item, mapProvinces.keys.toList())
         binding?.provinceName?.setAdapter(adapter)
     }
 

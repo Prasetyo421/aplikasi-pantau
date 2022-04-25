@@ -16,8 +16,6 @@ import timber.log.Timber
 import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.CovidHospitalAdapter
 import com.didi.pantaucovid_19.adapter.NonCovidHospitalAdapter
-import com.didi.pantaucovid_19.helper.Helper.Companion.listProvince
-import com.didi.pantaucovid_19.helper.Helper.Companion.listProvinceName
 import com.didi.pantaucovid_19.model.CitiesItem
 import com.didi.pantaucovid_19.model.HospitalsCovidItem
 import com.didi.pantaucovid_19.model.HospitalsNonCovidItem
@@ -25,6 +23,7 @@ import com.didi.pantaucovid_19.viewmodel.HospitalViewModel
 import com.didi.pantaucovid_19.viewmodel.SharedViewModel
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
+import com.didi.pantaucovid_19.helper.Helper.Companion.mapProvinces
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -64,7 +63,8 @@ class HospitalFragment : Fragment(), View.OnClickListener {
         })
 
         val tvProvinceName = binding?.provinceNamed
-        val adapter = ArrayAdapter(context as Context, R.layout.support_simple_spinner_dropdown_item,listProvinceName)
+        val adapter = ArrayAdapter(context as Context, R.layout.support_simple_spinner_dropdown_item,
+            mapProvinces.keys.toList())
         binding?.provinceNamed?.setAdapter(adapter)
         binding?.provinceNamed?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -72,11 +72,12 @@ class HospitalFragment : Fragment(), View.OnClickListener {
                     Timber.d("Current thread: ${Thread.currentThread()}")
                     val name = tvProvinceName?.text.toString().trim()
                     Timber.d("provName: {$name}")
-                    listProvince.forEach{ item ->
-                        if (name == item.name){
-                            provId = item.id
-                        }
-                    }
+                    provId = mapProvinces[name]
+//                    listProvince.forEach{ item ->
+//                        if (name == item.name){
+//                            provId = item.id
+//                        }
+//                    }
                     Timber.d("provID: $provId")
                     if (provId != null){
                         hospitalViewModel.setCities(provId as String)
