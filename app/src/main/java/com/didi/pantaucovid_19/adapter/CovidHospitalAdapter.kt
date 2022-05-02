@@ -13,18 +13,17 @@ import timber.log.Timber
 
 class CovidHospitalAdapter : RecyclerView.Adapter<CovidHospitalAdapter.HospitalViewHolder>() {
     var listData = ArrayList<HospitalsCovidItem>()
-    private var onItemClcikCallback: OnItemClickCallback? = null
+    private var onItemClickCallback: OnItemClickCallback? = null
     private var onPhoneClickCallback: OnPhoneClickCallback? = null
 
     suspend fun setData(listHospital: List<HospitalsCovidItem>){
         Timber.d("listDataOld: ${listData.size}, listDataNew: ${listHospital.size}")
         val diffCallback = CovidHospitalDiffCallback(this.listData, listHospital)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.listData.clear()
-        this.listData.addAll(listHospital)
-        val adapter = this
         withContext(Dispatchers.Main){
-            diffResult.dispatchUpdatesTo(adapter)
+            this@CovidHospitalAdapter.listData.clear()
+            this@CovidHospitalAdapter.listData.addAll(listHospital)
+            diffResult.dispatchUpdatesTo(this@CovidHospitalAdapter)
         }
     }
 
@@ -38,7 +37,7 @@ class CovidHospitalAdapter : RecyclerView.Adapter<CovidHospitalAdapter.HospitalV
                     onPhoneClickCallback?.onPhoneClicked(item)
                 }
                 itemView.setOnClickListener {
-                    onItemClcikCallback?.onItemClicked(item)
+                    onItemClickCallback?.onItemClicked(item)
                 }
             }
         }
@@ -56,7 +55,7 @@ class CovidHospitalAdapter : RecyclerView.Adapter<CovidHospitalAdapter.HospitalV
     override fun getItemCount(): Int  = listData.size
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
-        this.onItemClcikCallback = onItemClickCallback
+        this.onItemClickCallback = onItemClickCallback
     }
 
     fun setOnPhoneClickCallback(onPhoneClickCallback: OnPhoneClickCallback){

@@ -18,11 +18,10 @@ class NonCovidHospitalAdapter : RecyclerView.Adapter<NonCovidHospitalAdapter.Non
     suspend fun setData(listHospital: List<HospitalsNonCovidItem>){
         val diffCallback = NonCovidHospitalDiffCallback(this.listData, listHospital)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.listData.clear()
-        this.listData.addAll(listHospital)
-        val adapter = this
         withContext(Dispatchers.Main){
-            diffResult.dispatchUpdatesTo(adapter)
+            this@NonCovidHospitalAdapter.listData.clear()
+            this@NonCovidHospitalAdapter.listData.addAll(listHospital)
+            diffResult.dispatchUpdatesTo(this@NonCovidHospitalAdapter)
         }
     }
 

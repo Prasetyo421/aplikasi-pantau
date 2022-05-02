@@ -14,7 +14,7 @@ data class ResponseDataCovid(
 	val currentData: Double,
 
 	@field:SerializedName("list_data")
-	val listData: List<ListDataItem>,
+	val data: List<DataItem>,
 
 	@field:SerializedName("last_date")
 	val lastDate: String
@@ -50,7 +50,7 @@ data class Lokasi(
 	val lat: Double
 )
 
-data class ListDataItem(
+data class DataItem(
 
 	@field:SerializedName("penambahan")
 	val penambahan: Penambahan,

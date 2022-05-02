@@ -73,11 +73,6 @@ class HospitalFragment : Fragment(), View.OnClickListener {
                     val name = tvProvinceName?.text.toString().trim()
                     Timber.d("provName: {$name}")
                     provId = mapProvinces[name]
-//                    listProvince.forEach{ item ->
-//                        if (name == item.name){
-//                            provId = item.id
-//                        }
-//                    }
                     Timber.d("provID: $provId")
                     if (provId != null){
                         hospitalViewModel.setCities(provId as String)

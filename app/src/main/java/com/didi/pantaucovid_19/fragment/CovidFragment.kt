@@ -15,7 +15,7 @@ import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.CovidAdapter
 import com.didi.pantaucovid_19.databinding.FragmentCovidBinding
 import com.didi.pantaucovid_19.helper.Helper.Companion.mapProvinces
-import com.didi.pantaucovid_19.model.ListDataItem
+import com.didi.pantaucovid_19.model.DataItem
 import com.didi.pantaucovid_19.viewmodel.CovidViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,14 +45,9 @@ class CovidFragment : Fragment() {
         covidViewModel.setDataCovid()
         val visible = binding?.shimmerCovid?.visibility
         Timber.d("isloading: $visible")
-        covidViewModel.listCovid.observe(viewLifecycleOwner, { listCovid ->
+        covidViewModel.covid.observe(viewLifecycleOwner, { listCovid ->
             lifecycleScope.launch(Dispatchers.Default){
-//                if (false){
-//
-//                }else {
-//                    covidAdapter.setData(ArrayList(listCovid))
-//                }
-                covidAdapter.setData(ArrayList(listCovid))
+                covidAdapter.setData(listCovid)
             }
         })
 
@@ -64,9 +59,11 @@ class CovidFragment : Fragment() {
         binding?.provinceName?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val provName = binding?.provinceName?.text.toString().trim()
 
-            covidViewModel.listCovid.observe(viewLifecycleOwner, { listCovid ->
+            covidViewModel.covid.observe(viewLifecycleOwner, { listCovid ->
+                Timber.d("Thread ${Thread.currentThread()}")
                 lifecycleScope.launch(Dispatchers.Default){
-                    val itemProv = ArrayList<ListDataItem>()
+                    Timber.d("Thread ${Thread.currentThread()}")
+                    val itemProv = ArrayList<DataItem>()
                     val chars: List<Char> = provName.map { it.uppercaseChar() }
                     val upperProvName = String(chars.toCharArray())
                     Timber.d("convert: $upperProvName")

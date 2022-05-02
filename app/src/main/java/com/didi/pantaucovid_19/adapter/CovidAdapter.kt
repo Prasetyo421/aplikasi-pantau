@@ -6,31 +6,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.didi.pantaucovid_19.databinding.ItemCovidBinding
 import com.didi.pantaucovid_19.helper.CovidDiffCallback
-import com.didi.pantaucovid_19.model.ListDataItem
+import com.didi.pantaucovid_19.model.DataItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class CovidAdapter : RecyclerView.Adapter<CovidAdapter.CovidViewHolder>() {
-    private val listCovid = ArrayList<ListDataItem>()
+    private val listCovid: MutableList<DataItem> = mutableListOf()
 
-    suspend fun setData(listCovid: ArrayList<ListDataItem>){
-        Timber.d("listCovidOld: ${this.listCovid.size}, listCovidNew: ${listCovid.size}")
-        val diffCallback = CovidDiffCallback(this.listCovid, listCovid)
+    suspend fun setData(covid: List<DataItem>) {
+        val diffCallback = CovidDiffCallback(this@CovidAdapter.listCovid, covid)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.listCovid.clear()
-        this.listCovid.addAll(listCovid)
-        Timber.d("listCovidOld: ${this.listCovid.size}")
-        val adapter = this
-        withContext(Dispatchers.Main){
-            diffResult.dispatchUpdatesTo(adapter)
+        withContext(Dispatchers.Main) {
+            this@CovidAdapter.listCovid.clear()
+            this@CovidAdapter.listCovid.addAll(covid)
+            Timber.d("listCovidOld: ${this@CovidAdapter.listCovid.size}")
+            diffResult.dispatchUpdatesTo(this@CovidAdapter)
         }
     }
 
-    inner class CovidViewHolder(private val binding: ItemCovidBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(province: ListDataItem){
-            with(binding){
+    inner class CovidViewHolder(private val binding: ItemCovidBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(province: DataItem) {
+            with(binding) {
                 tvProvinceName.text = province.key
                 tvAmountCases.text = province.jumlahKasus.toString()
                 tvAmountDeath.text = province.jumlahMeninggal.toString()
