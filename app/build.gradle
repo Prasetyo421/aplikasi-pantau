@@ -29,56 +29,52 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     def retrofitVersion = "2.9.0"
     def loggingInterceptorVersion = "4.9.1"
     def chuckerVersion = "3.5.2"
-    def preference_version = "1.1.1"
 
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
     implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation 'com.loopj.android:android-async-http:1.4.11'
-    implementation "androidx.work:work-runtime:2.6.0"
+    implementation "androidx.work:work-runtime:2.7.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
     implementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
-    implementation "androidx.activity:activity-ktx:1.3.1"
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
-    implementation("androidx.preference:preference-ktx:$preference_version")
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation 'androidx.room:room-runtime:2.3.0'
-    kapt 'androidx.room:room-compiler:2.3.0'
+    implementation 'androidx.room:room-runtime:2.4.2'
+    kapt 'androidx.room:room-compiler:2.4.2'
     implementation "com.facebook.shimmer:shimmer:0.5.0"
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.9.0'
+    implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.5.1'
     testImplementation 'org.mockito:mockito-inline:3.6.0'
 
     androidTestImplementation 'androidx.test:runner:1.4.0'
