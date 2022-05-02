@@ -1,17 +1,15 @@
 package com.didi.pantaucovid_19.fragment
 
 import android.location.Geocoder
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.databinding.FragmentMapsBinding
 import com.didi.pantaucovid_19.viewmodel.SharedViewModel
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -37,7 +35,7 @@ class MapsFragment : Fragment() {
          */
         Timber.d("hospital name: $hospitalName")
         val gcd = Geocoder(context)
-        if (hospitalName != null){
+        if (hospitalName != null) {
             val result = gcd.getFromLocationName(this.hospitalName, 1)
 
             val latitude = result[0].latitude
@@ -45,9 +43,10 @@ class MapsFragment : Fragment() {
             val hospital = LatLng(latitude, longitude)
             googleMap.addMarker(MarkerOptions().position(hospital).title("${this.hospitalName}"))
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(hospital))
-        }else {
+        } else {
             Timber.d("hospitalname null")
-        }}
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,10 +57,10 @@ class MapsFragment : Fragment() {
 
         Timber.d("onCreatedView")
 
-        sharedViewModel.paramDetailHospital.observe(viewLifecycleOwner, { param ->
+        sharedViewModel.paramDetailHospital.observe(viewLifecycleOwner) { param ->
             this.hospitalName = param.name
             Timber.d("onCreatedView set: ${param.name}")
-        })
+        }
 
         Timber.d("onCreatedView: $hospitalName")
 

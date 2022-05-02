@@ -1,10 +1,10 @@
 package com.didi.pantaucovid_19.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.didi.pantaucovid_19.adapter.BedDetailAdapter
@@ -57,37 +57,37 @@ class ListHospitalFragment : Fragment() {
 
         binding?.rvDetailBed?.layoutManager = LinearLayoutManager(context)
 
-        hospitalViewMode.isLoading.observe(viewLifecycleOwner, { state ->
+        hospitalViewMode.isLoading.observe(viewLifecycleOwner) { state ->
             showLoading(state)
-        })
+        }
 
-        sharedViewModel.paramDetailHospital.observe(viewLifecycleOwner, { param ->
+        sharedViewModel.paramDetailHospital.observe(viewLifecycleOwner) { param ->
             Timber.d("param: ${param.name}")
             Timber.d("index: ${index}")
-            if (index == 0){
+            if (index == 0) {
                 hospitalViewMode.setBedDetailHospital(param.id, TYPE_COVID)
-                hospitalViewMode.bedDetailHospital.observe(viewLifecycleOwner, { listData ->
+                hospitalViewMode.bedDetailHospital.observe(viewLifecycleOwner) { listData ->
                     Timber.d("listData: Size ${listData.size}")
                     adapter?.setData(listData)
                     binding?.rvDetailBed?.adapter = adapter
-                })
+                }
 
-            }else {
+            } else {
                 hospitalViewMode.setBedDetailHospital(param.id, TYPE_NON_COVID)
-                hospitalViewMode.bedDetailHospital.observe(viewLifecycleOwner, { listData ->
+                hospitalViewMode.bedDetailHospital.observe(viewLifecycleOwner) { listData ->
                     Timber.d("listData: Size ${listData.size}")
                     adapter?.setData(listData)
                     binding?.rvDetailBed?.adapter = adapter
-                })
+                }
             }
-        })
+        }
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
+    private fun showLoading(state: Boolean) {
+        if (state) {
             binding?.shimmerBedDetail?.visibility = View.VISIBLE
             binding?.rvDetailBed?.visibility = View.GONE
-        }else {
+        } else {
             binding?.shimmerBedDetail?.visibility = View.GONE
             binding?.rvDetailBed?.visibility = View.VISIBLE
         }

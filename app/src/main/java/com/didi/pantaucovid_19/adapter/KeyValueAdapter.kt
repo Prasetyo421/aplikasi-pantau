@@ -12,7 +12,7 @@ class KeyValueAdapter : RecyclerView.Adapter<KeyValueAdapter.KeyValueViewHolder>
     val listData = ArrayList<CitiesItem>()
     var itemClickCallback: OnItemClickCallback? = null
 
-    fun setData(listCity: List<CitiesItem>){
+    fun setData(listCity: List<CitiesItem>) {
         val diffCallback = CityDiffCallback(listData, listCity)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listData.clear()
@@ -20,8 +20,9 @@ class KeyValueAdapter : RecyclerView.Adapter<KeyValueAdapter.KeyValueViewHolder>
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class KeyValueViewHolder(val binding: SimpleItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CitiesItem){
+    inner class KeyValueViewHolder(val binding: SimpleItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: CitiesItem) {
             binding.text1.text = item.name
         }
     }
@@ -37,11 +38,11 @@ class KeyValueAdapter : RecyclerView.Adapter<KeyValueAdapter.KeyValueViewHolder>
 
     override fun getItemCount(): Int = listData.size
 
-    fun setOnItemClickCallback(itemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(itemClickCallback: OnItemClickCallback) {
         this.itemClickCallback = itemClickCallback
     }
 
-    interface OnItemClickCallback{
+    interface OnItemClickCallback {
         fun onClicked(item: CitiesItem)
     }
 }

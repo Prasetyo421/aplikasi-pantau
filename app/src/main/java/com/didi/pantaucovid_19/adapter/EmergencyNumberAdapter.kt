@@ -8,11 +8,12 @@ import com.didi.pantaucovid_19.database.PhoneNumber
 import com.didi.pantaucovid_19.databinding.ItemEmergencyNumberBinding
 import com.didi.pantaucovid_19.helper.NumberDiffCallback
 
-class EmergencyNumberAdapter : RecyclerView.Adapter<EmergencyNumberAdapter.EmergencyNumberViewHolder>() {
+class EmergencyNumberAdapter :
+    RecyclerView.Adapter<EmergencyNumberAdapter.EmergencyNumberViewHolder>() {
     private val listNumber = ArrayList<PhoneNumber>()
     private var onItemClickCallback: OnPhoneClickCallback? = null
 
-    fun setData(listNumber: List<PhoneNumber>){
+    fun setData(listNumber: List<PhoneNumber>) {
         val diffCallback = NumberDiffCallback(this.listNumber, listNumber)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listNumber.clear()
@@ -20,9 +21,10 @@ class EmergencyNumberAdapter : RecyclerView.Adapter<EmergencyNumberAdapter.Emerg
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class EmergencyNumberViewHolder(private val binding: ItemEmergencyNumberBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(number: PhoneNumber){
-            with(binding){
+    inner class EmergencyNumberViewHolder(private val binding: ItemEmergencyNumberBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(number: PhoneNumber) {
+            with(binding) {
                 tvNumberName.text = number.name
                 tvNumber.text = number.number
                 imgPhoneEnable.setOnClickListener {
@@ -32,16 +34,17 @@ class EmergencyNumberAdapter : RecyclerView.Adapter<EmergencyNumberAdapter.Emerg
         }
     }
 
-    fun setOnPhoneClickCallback(onItemClickCallback: OnPhoneClickCallback){
+    fun setOnPhoneClickCallback(onItemClickCallback: OnPhoneClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    interface OnPhoneClickCallback{
+    interface OnPhoneClickCallback {
         fun onClicked(number: PhoneNumber)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmergencyNumberViewHolder {
-        val binding = ItemEmergencyNumberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemEmergencyNumberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EmergencyNumberViewHolder(binding)
     }
 

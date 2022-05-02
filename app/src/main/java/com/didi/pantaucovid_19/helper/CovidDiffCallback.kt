@@ -3,8 +3,11 @@ package com.didi.pantaucovid_19.helper
 import androidx.recyclerview.widget.DiffUtil
 import com.didi.pantaucovid_19.model.DataItem
 
-class CovidDiffCallback(private val mOldCovid: List<DataItem>, private val mNewCovid: List<DataItem>) : DiffUtil
-.Callback(){
+class CovidDiffCallback(
+    private val mOldCovid: List<DataItem>,
+    private val mNewCovid: List<DataItem>
+) : DiffUtil
+.Callback() {
     override fun getOldListSize(): Int {
         return mOldCovid.size
     }

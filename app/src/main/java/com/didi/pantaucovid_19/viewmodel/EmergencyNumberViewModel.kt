@@ -10,15 +10,15 @@ class EmergencyNumberViewModel(application: Application) : ViewModel() {
 
     fun getAllNumbers() = mPhoneNumberRepository.getAllNumbers()
 
-    fun insert(phoneNumber: PhoneNumber){
+    fun insert(phoneNumber: PhoneNumber) {
         mPhoneNumberRepository.insert(phoneNumber)
     }
 
-    fun update(phoneNumber: PhoneNumber){
+    fun update(phoneNumber: PhoneNumber) {
         mPhoneNumberRepository.update(phoneNumber)
     }
 
-    fun delete(phoneNumber: PhoneNumber){
+    fun delete(phoneNumber: PhoneNumber) {
         mPhoneNumberRepository.delete(phoneNumber)
     }
 }

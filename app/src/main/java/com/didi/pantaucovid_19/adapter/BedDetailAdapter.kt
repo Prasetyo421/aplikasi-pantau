@@ -8,11 +8,10 @@ import com.didi.pantaucovid_19.databinding.ItemBedDetailBinding
 import com.didi.pantaucovid_19.helper.BedDetailDiffCallback
 import com.didi.pantaucovid_19.model.BedDetailItem
 
-class BedDetailAdapter : RecyclerView.Adapter<BedDetailAdapter.BedDetailViewHolder>()
-{
+class BedDetailAdapter : RecyclerView.Adapter<BedDetailAdapter.BedDetailViewHolder>() {
     val listData = ArrayList<BedDetailItem>()
 
-    fun setData(listBedDetail: List<BedDetailItem>){
+    fun setData(listBedDetail: List<BedDetailItem>) {
         val diffCallback = BedDetailDiffCallback(this.listData, listBedDetail)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         listData.clear()
@@ -20,9 +19,10 @@ class BedDetailAdapter : RecyclerView.Adapter<BedDetailAdapter.BedDetailViewHold
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class BedDetailViewHolder(private val binding: ItemBedDetailBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: BedDetailItem){
-            with(binding){
+    class BedDetailViewHolder(private val binding: ItemBedDetailBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: BedDetailItem) {
+            with(binding) {
                 tvTitle.text = item.stats.title
                 tvBedAvailable.text = item.stats.bedAvailable.toString()
                 tvTime.text = item.time
@@ -31,7 +31,8 @@ class BedDetailAdapter : RecyclerView.Adapter<BedDetailAdapter.BedDetailViewHold
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BedDetailViewHolder {
-        val binding = ItemBedDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemBedDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BedDetailViewHolder(binding)
     }
 

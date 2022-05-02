@@ -18,4 +18,4 @@ data class PhoneNumber(
 
     @ColumnInfo(name = "number")
     var number: String? = null
-): Parcelable
+) : Parcelable

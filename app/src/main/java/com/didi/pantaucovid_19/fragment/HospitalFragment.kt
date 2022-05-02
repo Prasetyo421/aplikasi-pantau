@@ -10,23 +10,25 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.didi.pantaucovid_19.databinding.FragmentHospitalBinding
-import timber.log.Timber
 import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.CovidHospitalAdapter
 import com.didi.pantaucovid_19.adapter.NonCovidHospitalAdapter
+import com.didi.pantaucovid_19.databinding.FragmentHospitalBinding
+import com.didi.pantaucovid_19.helper.Helper.Companion.mapProvinces
 import com.didi.pantaucovid_19.model.CitiesItem
 import com.didi.pantaucovid_19.model.HospitalsCovidItem
 import com.didi.pantaucovid_19.model.HospitalsNonCovidItem
 import com.didi.pantaucovid_19.viewmodel.HospitalViewModel
 import com.didi.pantaucovid_19.viewmodel.SharedViewModel
-import androidx.fragment.app.*
-import androidx.lifecycle.lifecycleScope
-import com.didi.pantaucovid_19.helper.Helper.Companion.mapProvinces
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class HospitalFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHospitalBinding? = null
@@ -58,27 +60,29 @@ class HospitalFragment : Fragment(), View.OnClickListener {
         covidHospitalAdapter = CovidHospitalAdapter()
         nonCovidHospitalAdapter = NonCovidHospitalAdapter()
 
-        hospitalViewModel.isLoading.observe(viewLifecycleOwner, { state ->
+        hospitalViewModel.isLoading.observe(viewLifecycleOwner) { state ->
             showLoading(state)
-        })
+        }
 
         val tvProvinceName = binding?.provinceNamed
-        val adapter = ArrayAdapter(context as Context, R.layout.support_simple_spinner_dropdown_item,
-            mapProvinces.keys.toList())
+        val adapter = ArrayAdapter(
+            context as Context, R.layout.support_simple_spinner_dropdown_item,
+            mapProvinces.keys.toList()
+        )
         binding?.provinceNamed?.setAdapter(adapter)
         binding?.provinceNamed?.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
+            AdapterView.OnItemClickListener { _, _, _, _ ->
                 lifecycleScope.launch(Dispatchers.Default) {
                     Timber.d("Current thread: ${Thread.currentThread()}")
                     val name = tvProvinceName?.text.toString().trim()
                     Timber.d("provName: {$name}")
                     provId = mapProvinces[name]
                     Timber.d("provID: $provId")
-                    if (provId != null){
+                    if (provId != null) {
                         hospitalViewModel.setCities(provId as String)
                         withContext(Dispatchers.Main) {
                             Timber.d("start")
-                            hospitalViewModel.listCities.observe(viewLifecycleOwner, { list ->
+                            hospitalViewModel.listCities.observe(viewLifecycleOwner) { list ->
                                 Timber.d("sizes cities1: ${list.size}")
                                 listCities = list
                                 val mArray = ArrayList<String>()
@@ -98,17 +102,17 @@ class HospitalFragment : Fragment(), View.OnClickListener {
                                         Timber.d("end setAdapter")
                                     }
                                 }
-                            })
+                            }
                         }
                     }
                 }
             }
 
-        tvCityName?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            lifecycleScope.launch(Dispatchers.Default){
+        tvCityName?.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+            lifecycleScope.launch(Dispatchers.Default) {
                 val cityName = tvCityName?.text.toString().trim()
                 listCities?.forEach {
-                    if (cityName == it.name){
+                    if (cityName == it.name) {
                         cityId = it.id
                     }
                 }
@@ -117,50 +121,54 @@ class HospitalFragment : Fragment(), View.OnClickListener {
 
         val detailHospitalFragment = DetailHospitalFragment()
 
-        covidHospitalAdapter.setOnItemClickCallback(object : CovidHospitalAdapter.OnItemClickCallback {
+        covidHospitalAdapter.setOnItemClickCallback(object :
+            CovidHospitalAdapter.OnItemClickCallback {
             override fun onItemClicked(item: HospitalsCovidItem) {
-                lifecycleScope.launch(Dispatchers.Default){
+                lifecycleScope.launch(Dispatchers.Default) {
                     model.setIdHospital(item.id)
                     model.setParamDetailHospital(item.id, item.name, TYPE_COVID)
                     activity?.supportFragmentManager?.commit {
                         addToBackStack("...")
                         replace(R.id.frame_container, detailHospitalFragment)
                     }
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(context, "name: ${item.name}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
 
-        nonCovidHospitalAdapter.setOnItemClickCallback(object : NonCovidHospitalAdapter.OnItemClickCallback{
+        nonCovidHospitalAdapter.setOnItemClickCallback(object :
+            NonCovidHospitalAdapter.OnItemClickCallback {
             override fun onItemClicked(item: HospitalsNonCovidItem) {
-                lifecycleScope.launch(Dispatchers.Default){
+                lifecycleScope.launch(Dispatchers.Default) {
                     model.setIdHospital(item.id)
                     model.setParamDetailHospital(item.id, item.name, TYPE_NON_COVID)
                     activity?.supportFragmentManager?.commit {
                         addToBackStack("...")
                         replace(R.id.frame_container, detailHospitalFragment)
                     }
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(context, "name: ${item.name}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
 
-        covidHospitalAdapter.setOnPhoneClickCallback(object : CovidHospitalAdapter.OnPhoneClickCallback{
+        covidHospitalAdapter.setOnPhoneClickCallback(object :
+            CovidHospitalAdapter.OnPhoneClickCallback {
             override fun onPhoneClicked(item: HospitalsCovidItem) {
-                lifecycleScope.launch(Dispatchers.Default){
+                lifecycleScope.launch(Dispatchers.Default) {
                     val move = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${item.phone}"))
                     startActivity(move)
                 }
             }
         })
 
-        nonCovidHospitalAdapter.setPhoneClickCallback(object : NonCovidHospitalAdapter.OnPhoneClickCallback{
+        nonCovidHospitalAdapter.setPhoneClickCallback(object :
+            NonCovidHospitalAdapter.OnPhoneClickCallback {
             override fun onPhoneClicked(item: HospitalsNonCovidItem) {
-                lifecycleScope.launch(Dispatchers.Default){
+                lifecycleScope.launch(Dispatchers.Default) {
                     val move = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${item.phone}"))
                     startActivity(move)
                 }
@@ -175,62 +183,68 @@ class HospitalFragment : Fragment(), View.OnClickListener {
         Timber.d("Hospital Fragment end")
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
+    private fun showLoading(state: Boolean) {
+        if (state) {
             binding?.shimmerHospital?.visibility = View.VISIBLE
             binding?.rvHospital?.visibility = View.GONE
-        }else {
+        } else {
             binding?.shimmerHospital?.visibility = View.GONE
             binding?.rvHospital?.visibility = View.VISIBLE
         }
     }
 
     override fun onClick(v: View?) {
-        lifecycleScope.launch(Dispatchers.Default){
-            when(v?.id){
+        lifecycleScope.launch(Dispatchers.Default) {
+            when (v?.id) {
                 R.id.chip_covid -> {
                     type = TYPE_COVID
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         binding?.rvHospital?.layoutManager = LinearLayoutManager(context)
                         binding?.rvHospital?.adapter = covidHospitalAdapter
                     }
                 }
                 R.id.chip_non_covid -> {
                     type = TYPE_NON_COVID
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         binding?.rvHospital?.layoutManager = LinearLayoutManager(context)
                         binding?.rvHospital?.adapter = nonCovidHospitalAdapter
                     }
                 }
                 R.id.btn_search -> {
-                    if (provId != null && cityId != null && type != null){
-                        withContext(Dispatchers.Default){
-                            hospitalViewModel.setHospitalsData(provId as String, cityId as String, type as String)
+                    if (provId != null && cityId != null && type != null) {
+                        withContext(Dispatchers.Default) {
+                            hospitalViewModel.setHospitalsData(
+                                provId as String,
+                                cityId as String,
+                                type as String
+                            )
 
                         }
-                        if (type == TYPE_COVID){
-                            withContext(Dispatchers.Main){
-                                hospitalViewModel.listHospitalsCovid.observe(viewLifecycleOwner, { listHospital ->
-                                    lifecycleScope.launch(Dispatchers.Default){
+                        if (type == TYPE_COVID) {
+                            withContext(Dispatchers.Main) {
+                                hospitalViewModel.listHospitalsCovid.observe(viewLifecycleOwner) { listHospital ->
+                                    lifecycleScope.launch(Dispatchers.Default) {
                                         covidHospitalAdapter.setData(listHospital)
-                                        withContext(Dispatchers.Main){
-                                            binding?.rvHospital?.layoutManager = LinearLayoutManager(context)
+                                        withContext(Dispatchers.Main) {
+                                            binding?.rvHospital?.layoutManager =
+                                                LinearLayoutManager(context)
                                             binding?.rvHospital?.adapter = covidHospitalAdapter
                                         }
                                     }
-                                })
+                                }
                             }
-                        }else if (type == TYPE_NON_COVID){
-                            withContext(Dispatchers.Main){
-                                hospitalViewModel.listHospitalsNonCovid.observe(viewLifecycleOwner, { listHospital ->
-                                    lifecycleScope.launch(Dispatchers.Default){
+                        } else if (type == TYPE_NON_COVID) {
+                            withContext(Dispatchers.Main) {
+                                hospitalViewModel.listHospitalsNonCovid.observe(viewLifecycleOwner) { listHospital ->
+                                    lifecycleScope.launch(Dispatchers.Default) {
                                         nonCovidHospitalAdapter.setData(listHospital)
-                                        withContext(Dispatchers.Main){
-                                            binding?.rvHospital?.layoutManager = LinearLayoutManager(context)
+                                        withContext(Dispatchers.Main) {
+                                            binding?.rvHospital?.layoutManager =
+                                                LinearLayoutManager(context)
                                             binding?.rvHospital?.adapter = nonCovidHospitalAdapter
                                         }
                                     }
-                                })
+                                }
                             }
                         }
                     }
@@ -248,7 +262,7 @@ class HospitalFragment : Fragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         fun newInstance() = HospitalFragment()
-        val TYPE_COVID = "1"
-        val TYPE_NON_COVID = "2"
+        const val TYPE_COVID = "1"
+        const val TYPE_NON_COVID = "2"
     }
 }

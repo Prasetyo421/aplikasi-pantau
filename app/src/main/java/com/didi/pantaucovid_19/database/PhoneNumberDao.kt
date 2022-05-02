@@ -15,5 +15,5 @@ interface PhoneNumberDao {
     fun delete(number: PhoneNumber)
 
     @Query("SELECT * FROM phonenumber ORDER BY id ASC")
-    fun getAllPhoneNumbers() : LiveData<List<PhoneNumber>>
+    fun getAllPhoneNumbers(): LiveData<List<PhoneNumber>>
 }

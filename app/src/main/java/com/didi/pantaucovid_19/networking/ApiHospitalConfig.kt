@@ -7,8 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiHospitalConfig {
     companion object {
-        fun getInstance(): ApiHospitalService{
-            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        fun getInstance(): ApiHospitalService {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build()

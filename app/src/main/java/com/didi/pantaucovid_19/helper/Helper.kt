@@ -2,7 +2,6 @@ package com.didi.pantaucovid_19.helper
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.didi.pantaucovid_19.model.ProvincesItem
 
 class Helper {
     companion object {

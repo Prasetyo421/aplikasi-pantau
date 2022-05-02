@@ -3,7 +3,10 @@ package com.didi.pantaucovid_19.helper
 import androidx.recyclerview.widget.DiffUtil
 import com.didi.pantaucovid_19.database.PhoneNumber
 
-class NumberDiffCallback(private val mOldEmergencyNumberList: List<PhoneNumber>, private val mNewEmergencyNumberList: List<PhoneNumber>) : DiffUtil.Callback() {
+class NumberDiffCallback(
+    private val mOldEmergencyNumberList: List<PhoneNumber>,
+    private val mNewEmergencyNumberList: List<PhoneNumber>
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldEmergencyNumberList.size
     }

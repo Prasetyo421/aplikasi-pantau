@@ -3,7 +3,8 @@ package com.didi.pantaucovid_19.helper
 import androidx.recyclerview.widget.DiffUtil
 import com.didi.pantaucovid_19.model.CitiesItem
 
-class CityDiffCallback(val mOldListCities: List<CitiesItem>, val mNewListCities: List<CitiesItem>) : DiffUtil.Callback() {
+class CityDiffCallback(val mOldListCities: List<CitiesItem>, val mNewListCities: List<CitiesItem>) :
+    DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldListCities.size
     }

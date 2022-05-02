@@ -1,10 +1,10 @@
 package com.didi.pantaucovid_19.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
@@ -69,7 +69,7 @@ class DetailHospitalFragment : Fragment() {
         val viewPager: ViewPager2 = binding?.viewPager as ViewPager2
         viewPager.adapter = sectionPagerAdapter
         val tabs = binding?.tabs as TabLayout
-        TabLayoutMediator(tabs, viewPager){ tab, position ->
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
@@ -80,6 +80,7 @@ class DetailHospitalFragment : Fragment() {
             R.string.covid,
             R.string.non_covid
         )
+
         @JvmStatic
         fun newInstance() = DetailHospitalFragment()
     }

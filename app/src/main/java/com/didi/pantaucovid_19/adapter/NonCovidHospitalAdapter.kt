@@ -15,21 +15,22 @@ class NonCovidHospitalAdapter : RecyclerView.Adapter<NonCovidHospitalAdapter.Non
     private var onItemClickCallback: OnItemClickCallback? = null
     private var onPhoneClickCallback: OnPhoneClickCallback? = null
 
-    suspend fun setData(listHospital: List<HospitalsNonCovidItem>){
+    suspend fun setData(listHospital: List<HospitalsNonCovidItem>) {
         val diffCallback = NonCovidHospitalDiffCallback(this.listData, listHospital)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
             this@NonCovidHospitalAdapter.listData.clear()
             this@NonCovidHospitalAdapter.listData.addAll(listHospital)
             diffResult.dispatchUpdatesTo(this@NonCovidHospitalAdapter)
         }
     }
 
-    inner class NonCovidViewHolder(val binding: ItemHospitalBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HospitalsNonCovidItem){
-            with(binding){
+    inner class NonCovidViewHolder(val binding: ItemHospitalBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: HospitalsNonCovidItem) {
+            with(binding) {
                 var bedAvailable = 0
-                item.availableBeds.forEach{
+                item.availableBeds.forEach {
                     bedAvailable += it.available
                 }
                 tvBedAvailable.text = bedAvailable.toString()
@@ -49,7 +50,8 @@ class NonCovidHospitalAdapter : RecyclerView.Adapter<NonCovidHospitalAdapter.Non
         parent: ViewGroup,
         viewType: Int
     ): NonCovidHospitalAdapter.NonCovidViewHolder {
-        val binding = ItemHospitalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemHospitalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NonCovidViewHolder(binding)
     }
 
@@ -60,21 +62,21 @@ class NonCovidHospitalAdapter : RecyclerView.Adapter<NonCovidHospitalAdapter.Non
         holder.bind(listData[position])
     }
 
-    override fun getItemCount(): Int  = listData.size
+    override fun getItemCount(): Int = listData.size
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setPhoneClickCallback(onPhoneClickCallback: OnPhoneClickCallback){
+    fun setPhoneClickCallback(onPhoneClickCallback: OnPhoneClickCallback) {
         this.onPhoneClickCallback = onPhoneClickCallback
     }
 
-    interface OnItemClickCallback{
+    interface OnItemClickCallback {
         fun onItemClicked(item: HospitalsNonCovidItem)
     }
 
-    interface OnPhoneClickCallback{
+    interface OnPhoneClickCallback {
         fun onPhoneClicked(item: HospitalsNonCovidItem)
     }
 

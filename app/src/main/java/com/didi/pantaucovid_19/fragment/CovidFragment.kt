@@ -2,13 +2,13 @@ package com.didi.pantaucovid_19.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.didi.pantaucovid_19.R
@@ -45,61 +45,69 @@ class CovidFragment : Fragment() {
         covidViewModel.setDataCovid()
         val visible = binding?.shimmerCovid?.visibility
         Timber.d("isloading: $visible")
-        covidViewModel.covid.observe(viewLifecycleOwner, { listCovid ->
-            lifecycleScope.launch(Dispatchers.Default){
+        covidViewModel.covid.observe(viewLifecycleOwner) { listCovid ->
+            lifecycleScope.launch(Dispatchers.Default) {
                 covidAdapter.setData(listCovid)
             }
-        })
+        }
 
-        covidViewModel.isLoading.observe(viewLifecycleOwner, { state ->
+        covidViewModel.isLoading.observe(viewLifecycleOwner) { state ->
             Timber.d("isloading2: $state")
             showLoading(state)
-        })
+        }
 
-        binding?.provinceName?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        binding?.provinceName?.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
             val provName = binding?.provinceName?.text.toString().trim()
 
-            covidViewModel.covid.observe(viewLifecycleOwner, { listCovid ->
+            covidViewModel.covid.observe(viewLifecycleOwner) { listCovid ->
                 Timber.d("Thread ${Thread.currentThread()}")
-                lifecycleScope.launch(Dispatchers.Default){
+                lifecycleScope.launch(Dispatchers.Default) {
                     Timber.d("Thread ${Thread.currentThread()}")
                     val itemProv = ArrayList<DataItem>()
                     val chars: List<Char> = provName.map { it.uppercaseChar() }
                     val upperProvName = String(chars.toCharArray())
                     Timber.d("convert: $upperProvName")
-                    listCovid.forEach{ item ->
+                    listCovid.forEach { item ->
                         Timber.d("{${item.key}}")
-                        if (item.key == upperProvName){
+                        if (item.key == upperProvName) {
                             itemProv.add(item)
                             return@forEach
                         }
                     }
-                    if (itemProv.isNotEmpty()){
+                    if (itemProv.isNotEmpty()) {
                         covidAdapter.setData(itemProv)
-                        withContext(Dispatchers.Main){
+                        withContext(Dispatchers.Main) {
                             binding?.rvCovid?.adapter = covidAdapter
                         }
-                    }else {
-                        withContext(Dispatchers.Main){
-                            Toast.makeText(context, "Cannot find province name \"$provName\"", Toast.LENGTH_SHORT).show()
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                "Cannot find province name \"$provName\"",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
-            })
+            }
         }
 
         binding?.rvCovid?.layoutManager = LinearLayoutManager(context)
         binding?.rvCovid?.adapter = covidAdapter
 
-        val adapter = ArrayAdapter<String>(context as Context, R.layout.support_simple_spinner_dropdown_item, mapProvinces.keys.toList())
+        val adapter = ArrayAdapter<String>(
+            context as Context,
+            R.layout.support_simple_spinner_dropdown_item,
+            mapProvinces.keys.toList()
+        )
         binding?.provinceName?.setAdapter(adapter)
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
+    private fun showLoading(state: Boolean) {
+        if (state) {
             binding?.shimmerCovid?.visibility = View.VISIBLE
             binding?.rvCovid?.visibility = View.GONE
-        }else {
+        } else {
             binding?.shimmerCovid?.visibility = View.GONE
             binding?.rvCovid?.visibility = View.VISIBLE
         }

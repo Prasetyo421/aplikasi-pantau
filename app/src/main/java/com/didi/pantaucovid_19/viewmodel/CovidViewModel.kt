@@ -12,25 +12,25 @@ import retrofit2.Response
 import timber.log.Timber
 
 class CovidViewModel : ViewModel() {
-    private var _listCovid =  MutableLiveData<List<DataItem>>()
+    private var _listCovid = MutableLiveData<List<DataItem>>()
     val covid: LiveData<List<DataItem>> = _listCovid
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun setDataCovid(){
+    fun setDataCovid() {
         _isLoading.value = true
         val client = ApiCoronaConfig.getApiCoronaService().getAllProvince()
-        client.enqueue(object : Callback<ResponseDataCovid>{
+        client.enqueue(object : Callback<ResponseDataCovid> {
             override fun onResponse(
                 call: Call<ResponseDataCovid>,
                 response: Response<ResponseDataCovid>
             ) {
                 Timber.d("isVisible: $isLoading")
-                if (response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     val responseBody: ResponseDataCovid = response.body() as ResponseDataCovid
                     _listCovid.value = responseBody.data
-                }else {
+                } else {
                     Timber.d("onFailure: ${response.message()}")
                 }
                 _isLoading.value = false
