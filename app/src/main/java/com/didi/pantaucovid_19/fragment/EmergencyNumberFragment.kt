@@ -12,11 +12,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.didi.pantaucovid_19.R
 import com.didi.pantaucovid_19.adapter.EmergencyNumberAdapter
 import com.didi.pantaucovid_19.database.PhoneNumber
 import com.didi.pantaucovid_19.databinding.FragmentEmergencyNumberBinding
 import com.didi.pantaucovid_19.viewmodel.EmergencyNumberViewModel
 import com.didi.pantaucovid_19.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -41,26 +43,30 @@ class EmergencyNumberFragment : Fragment() {
         emergencyNumberViewModel = obtainViewModel(activity)
         adapter = EmergencyNumberAdapter()
 
-        emergencyNumberViewModel.getAllNumbers().observe(viewLifecycleOwner, { listNumber ->
-            Timber.d("current thread: ${Thread.currentThread()}")
-            showLoading(true)
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (listNumber.isEmpty()) {
-                    listNumbers.forEach {
-                        Timber.d("current thread foreach: ${Thread.currentThread()}")
-                        emergencyNumberViewModel.insert(it)
-                    }
-                }
-            }
-
-            adapter.setData(listNumber)
-            showLoading(false)
-        })
-
-        binding?.rvEmergencyNumber?.layoutManager = LinearLayoutManager(context)
         binding?.rvEmergencyNumber?.adapter = adapter
+        subscribeUI(adapter)
 
+        emergencyNumberViewModel.loading.observe(viewLifecycleOwner) { state ->
+            showLoading(state)
+        }
+
+        emergencyNumberViewModel.snackbar.observe(viewLifecycleOwner) { message ->
+            message?.let {
+                Snackbar.make(
+                    requireActivity().findViewById(R.id.root_layout),
+                    message,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            emergencyNumberViewModel.onSnackbarShown()
+        }
+    }
+
+    private fun subscribeUI(adapter: EmergencyNumberAdapter) {
+        binding?.rvEmergencyNumber?.layoutManager = LinearLayoutManager(context)
+        emergencyNumberViewModel.getAllNumbers().observe(viewLifecycleOwner) { numbers ->
+            adapter.setData(numbers)
+        }
         adapter.setOnPhoneClickCallback(object : EmergencyNumberAdapter.OnPhoneClickCallback {
             override fun onClicked(number: PhoneNumber) {
                 lifecycleScope.launch(Dispatchers.Default) {
@@ -84,7 +90,7 @@ class EmergencyNumberFragment : Fragment() {
 
     private fun obtainViewModel(activity: FragmentActivity?): EmergencyNumberViewModel {
         val factory = ViewModelFactory.getInstance(activity?.application as Application)
-        return ViewModelProvider(activity, factory).get(EmergencyNumberViewModel::class.java)
+        return ViewModelProvider(activity, factory)[EmergencyNumberViewModel::class.java]
     }
 
     override fun onDestroy() {
